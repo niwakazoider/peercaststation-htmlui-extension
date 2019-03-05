@@ -13,8 +13,9 @@ $(function(){
     $("#channels tr").each(function(){
       var tr = $(this);
       var columnType = tr.find(".column-type");
-      var playUrl = columnType.find("a").attr("href").split("?")[0];
-      var channelID = playUrl.split("/")[2];
+      var href = columnType.find("a").attr("href").split("?tip=");
+      var tip = href[1];
+      var channelID = href[0].split("/")[2];
       if(columnType.text()!="FLV"){
         return;
       }
@@ -22,11 +23,12 @@ $(function(){
       tr.find(".column-play").append(playButton);
       playButton.click(function(){
         var video_id = "video_"+channelID;
+        $("#"+video_id).parents("tr:eq(0)").remove();
         var newtr = $("<tr><td class='hls-player'><video width='640' controls='true'></td></tr>");
         newtr.find("video").attr("id",video_id);
         newtr.insertAfter(tr);
         $(".hls-player").css("display","inline-table");
-        playHls(video_id, "/pls/"+channelID+".m3u8");
+        playHls(video_id, "/pls/"+channelID+".m3u8?tip="+tip);
       });
     });
     $("#channels .column-play").css("width", "30px");
