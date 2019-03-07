@@ -46,9 +46,8 @@ $(function(){
   }
 
   function playFlv(id, src){
-    var video = getFlvPlayer(id);
-
     if(!flvjs.isSupported()) return;
+    var video = getFlvPlayer(id);
     var flvPlayer = flvjs.createPlayer({type:"flv","isLive":true,url:src});
     flvPlayer.attachMediaElement(video);
     flvPlayer.load();
